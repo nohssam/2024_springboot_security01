@@ -14,14 +14,17 @@ import org.springframework.security.web.firewall.HttpFirewall;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-      @Bean
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf((csrfConfig) -> csrfConfig.disable())
                 .headers(
                         (headerConfig) -> headerConfig.frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/**").permitAll()
-                        .anyRequest().authenticated());
+                        //.requestMatchers("/**")
+                        .requestMatchers("/api/members/**")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated());
         return http.build();
     }
 
